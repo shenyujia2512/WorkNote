@@ -1,0 +1,11 @@
+https://ibotpeaches.github.io/Apktool/ 下载最新的 apktool 工具
+解包命令:                   ./apktool_2.6.0.jar d xxx.apk
+修改APK文件，重新打包命令：   ./apktool_2.6.0.jar b xxx -o xxx.apk
+
+zipalign 工具进行对齐(优化作用):  zipalign -f 4 xxx.apk xxx_zipalign.apk
+
+生成.jks文件：keytool.exe -genkeypair -alias key -keyalg RSA -keypass 501937 -storepass 501937 -keyalg RSA -keysize 2048 -validity 3650 -keystore key.jk
+apksigner 工具进行签名:   apksigner sign -ks key.jks -ks-key-alias key -ks-pass pass:501937 -key-pass pass:501937 -out xxx_zipalign.apk xxx_out_zipalign.apk
+
+
+最后就可以安装使用修改过的APK
