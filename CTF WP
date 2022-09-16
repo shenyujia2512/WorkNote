@@ -1,0 +1,16 @@
+题目：https://adworld.xctf.org.cn/challenges/details?hash=ea8d4d36-13c5-11ed-9802-fa163e4fa66d&task_category_id=1
+
+# coding:utf-8
+import re
+
+d = open('1.mp3','rb').read()[0x399D0:] # 从mf[0] 字节开始 已经到结束 读取到变量d中
+res = ""
+for i in range(5911):       # 5911 个结构段
+    private_bit = d[2]&1    # 获取地址端 第3个字节 的最后一位数据 就是 private_bit
+    res += str(private_bit) # 收集 private_bit
+    if d[0x1a1:0x1a3] == b'\xff\xfb': # 2种情况 -- 首2个字节是 private_bit 前2个字节内容
+        d = d[0x1a1:]
+    elif d[0x1a2:0x1a4] == b'\xff\xfb':
+        d = d[0x1a2:]
+print(res)
+print(bytes([int(i, 2) for i in re.findall(r'.{8}', res)]).decode('utf-8')) # 提取 private_bit 二进制 转ASCII码 后在转字符 utf-8编码 后得到flag
